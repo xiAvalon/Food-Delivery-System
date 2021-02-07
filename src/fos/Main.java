@@ -215,7 +215,7 @@ public class Main {
     System.out.println("Enter 1 to make a new order");
     System.out.println("Enter 2 to show available restaurants");
     System.out.println("Enter 3 to show cart");
-    System.out.println("Enter 4 to change your details");
+    System.out.println("Enter 4 to change your address");
     System.out.println("Enter 5 to show order history");
     System.out.println("Enter 0 to logout");
 
@@ -294,23 +294,12 @@ public class Main {
       }
       case 4 -> {
         System.out.println("\t\t\t\t" + user.getName() + "'s profile details");
-        System.out.println(user);
-        System.out.println("Enter number of detail");
-        System.out.println("[0] for name");
-        System.out.println("[1] for password");
-        System.out.println("[2] for address");
-        System.out.println("[3] for phoneNumber");
-        System.out.println("[4] for email");
-        System.out.println("[-1] to go back");
-        int choice1 = checkOptions(4);
-        switch (choice1) {
-          case 0 -> user.setName(scanner.next());
-          case 1 -> user.setPassword(scanner.next());
-          case 2 -> user.setAddress(scanner.next());
-          case 3 -> user.setPhoneNumber(scanner.nextLong());
-          case 4 -> user.setEmail(scanner.next());
-          case -1 -> customerOptions(user);
-        }
+        System.out.println("Your current address:");
+        System.out.println(user.getAddress() + "\n");
+        System.out.println("Enter your new address (0 to keep current address):");
+        String input = scanner.next();
+        if (!input.equals("0"))
+          user.setAddress(input);
       }
       case 5 -> {
         for (Order X : orders)
@@ -319,6 +308,7 @@ public class Main {
       }
       case 0 -> main(new String[1]);
     }
+    System.out.println();
     customerOptions(user);
   }
 
