@@ -3,9 +3,13 @@ package fos;
 import java.lang.reflect.InvocationTargetException;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import javax.swing.*;
+import javax.swing.plaf.FontUIResource;
+
 import java.util.ArrayList;
-import java.util.InputMismatchException;
-import java.util.Scanner;
+import java.awt.*;
+import java.io.*;
+import java.util.*;
 
 import fos.services.DatabaseService;
 import fos.models.*;
@@ -24,11 +28,40 @@ public class Main {
   public static ArrayList<Payment> payments = DatabaseService.paymentsToArrayList();
   public static Cart cart = new Cart();
   private static final Scanner scanner = new Scanner(System.in);
+  private static JTextArea textArea;
+  private static int onlyFirst = 0;
+  static {
+    System.setOut(new PrintStream(new OutputStream() {
+      @Override
+      public void write(int b) throws IOException {
+        textArea.append("" + (char) (b & 0xFF));
+      }
+    }));
+  }
 
   public static void main(String[] args) {
     if (args.length > 0) {
       updateAll(customers, restaurants, products, riders, orders, orderDetailsList, payments);
       args = new String[0];
+    }
+    if (onlyFirst == 0) {
+      final JFrame frame = new JFrame("Food Ordering System");
+      frame.setSize(500, 500);
+      frame.setVisible(true);
+      frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+      frame.getContentPane().setLayout(new FlowLayout());
+
+      textArea = new JTextArea(28, 40);
+      textArea.setTabSize(3);
+      textArea.setFont(new FontUIResource(textArea.getFont().getName(), textArea.getFont().getStyle(), 12));
+      textArea.setLineWrap(true);
+      textArea.setEditable(false);
+
+      final JScrollPane scrollPane = new JScrollPane(textArea);
+      scrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
+      frame.getContentPane().add(scrollPane);
+      frame.validate();
+      onlyFirst++;
     }
     System.out.println("\t\t\t\tWELCOME TO FOS");
     System.out.println("Do you have an account?");
