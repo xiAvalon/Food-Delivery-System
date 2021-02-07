@@ -11,7 +11,6 @@ import fos.services.DatabaseService;
 import fos.models.*;
 
 public class Main {
-  private static final Scanner scanner = new Scanner(System.in);
   static {
     new DatabaseService();
   }
@@ -24,8 +23,13 @@ public class Main {
   public static ArrayList<OrderDetails> orderDetailsList = DatabaseService.orderDetailToArrayList();
   public static ArrayList<Payment> payments = DatabaseService.paymentsToArrayList();
   public static Cart cart = new Cart();
+  private static final Scanner scanner = new Scanner(System.in);
 
   public static void main(String[] args) {
+    if (args.length > 0) {
+      updateAll(customers, restaurants, products, riders, orders, orderDetailsList, payments);
+      args = new String[0];
+    }
     System.out.println("\t\t\t\tWELCOME TO FOS");
     System.out.println("Do you have an account?");
     String choice = scanner.nextLine();
@@ -35,6 +39,17 @@ public class Main {
       register();
     else
       main(args);
+  }
+
+  private static void updateAll(ArrayList... data) {
+    for (ArrayList Y : data)
+      for (Object X : Y) {
+        try {
+          X.getClass().getMethod("insertToDB").invoke(X);
+        } catch (IllegalAccessException | InvocationTargetException | NoSuchMethodException e) {
+          e.printStackTrace();
+        }
+      }
   }
 
   private static void register() {
