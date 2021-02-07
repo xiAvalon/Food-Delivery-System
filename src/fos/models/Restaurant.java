@@ -1,4 +1,9 @@
+package fos.models;
+
 import java.util.ArrayList;
+
+import fos.services.DatabaseService;
+import fos.Main;
 
 public class Restaurant {
   private final float deliveryTime;
@@ -13,11 +18,8 @@ public class Restaurant {
   private float deliveryFee;
   private ArrayList<Product> meals = new ArrayList<>();
 
-
-  Restaurant(long id, String name, String address,
-             String userName, String password, long phoneNumber,
-             boolean open, float minimumOrder,
-             float time, float deliveryFee) {
+  public Restaurant(long id, String name, String address, String userName, String password, long phoneNumber,
+      boolean open, float minimumOrder, float time, float deliveryFee) {
     this.ID = id;
     this.name = name;
     this.address = address;
@@ -29,19 +31,13 @@ public class Restaurant {
     this.deliveryTime = time;
     this.deliveryFee = deliveryFee;
 
-
   }
 
   public String toString() {
-    return "Restaurant Name: " + name + "\n" +
-        "Address: " + address + "\n" +
-        "Phone Number: " + phoneNumber + "\n" +
-        "Open/Closed: " + (open ? "OPEN" : "CLOSED") + "\n" +
-        "Minimum Order: " + minimumOrder + "\n" +
-        "Delivery Time: " + deliveryTime + "\n" +
-        "Delivery Fee: " + deliveryFee + "\n";
+    return "Restaurant Name: " + name + "\n" + "Address: " + address + "\n" + "Phone Number: " + phoneNumber + "\n"
+        + "Open/Closed: " + (open ? "OPEN" : "CLOSED") + "\n" + "Minimum Order: " + minimumOrder + "\n"
+        + "Delivery Time: " + deliveryTime + "\n" + "Delivery Fee: " + deliveryFee + "\n";
   }
-
 
   public void addMeals() {
     for (Product X : Main.products)
@@ -106,31 +102,14 @@ public class Restaurant {
   }
 
   public void insertToDB() {
-    DBAccessor.executeDB("INSERT INTO foodsystem.restaurant " +
-        "(ID, RESTAURANT_NAME, RESTAURANT_ADDRESS, user_name, password" +
-        ", phoneNumber, open, minimum_order, deliveryTime, deliveryFee)" +
-        "VALUES (" +
-        ID + ",'" +
-        name + "','" +
-        address + "','" +
-        userName + "','" +
-        password + "'," +
-        phoneNumber + "," +
-        open + "," +
-        minimumOrder + "," +
-        deliveryTime + "," +
-        deliveryFee + ")" +
-        "ON DUPLICATE KEY UPDATE" +
-        "   RESTAURANT_NAME = '" + name + "'," +
-        "   RESTAURANT_ADDRESS = '" + address + "'," +
-        "   user_name = '" + userName + "'," +
-        "   password = '" + password + "'," +
-        "   phoneNumber = " + phoneNumber + "," +
-        "   open = " + open + "," +
-        "   minimum_order = " + minimumOrder + "," +
-        "   deliveryTime = " + deliveryTime + "," +
-        "   deliveryFee = " + deliveryFee
-    );
+    DatabaseService.executeDB("INSERT INTO foodsystem.restaurant "
+        + "(ID, RESTAURANT_NAME, RESTAURANT_ADDRESS, user_name, password"
+        + ", phoneNumber, open, minimum_order, deliveryTime, deliveryFee)" + "VALUES (" + ID + ",'" + name + "','"
+        + address + "','" + userName + "','" + password + "'," + phoneNumber + "," + open + "," + minimumOrder + ","
+        + deliveryTime + "," + deliveryFee + ")" + "ON DUPLICATE KEY UPDATE" + "   RESTAURANT_NAME = '" + name + "',"
+        + "   RESTAURANT_ADDRESS = '" + address + "'," + "   user_name = '" + userName + "'," + "   password = '"
+        + password + "'," + "   phoneNumber = " + phoneNumber + "," + "   open = " + open + "," + "   minimum_order = "
+        + minimumOrder + "," + "   deliveryTime = " + deliveryTime + "," + "   deliveryFee = " + deliveryFee);
   }
 
   public float getMinimumOrder() {

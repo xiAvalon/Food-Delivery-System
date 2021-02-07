@@ -1,11 +1,16 @@
+package fos.services;
+
+import fos.models.*;
+import fos.Main;
+
 import java.sql.*;
 import java.util.ArrayList;
 
-public class DBAccessor {
+public class DatabaseService {
   static private Connection conn;
   static private Statement statement;
 
-  public DBAccessor() {
+  public DatabaseService() {
     try {
       Class.forName("com.mysql.cj.jdbc.Driver");
     } catch (ClassNotFoundException e) {
