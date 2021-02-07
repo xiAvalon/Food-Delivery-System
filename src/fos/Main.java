@@ -1,31 +1,31 @@
+package fos;
+
 import java.lang.reflect.InvocationTargetException;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.InputMismatchException;
 import java.util.Scanner;
+
+import fos.services.DatabaseService;
+import fos.models.*;
 
 public class Main {
   private static final Scanner scanner = new Scanner(System.in);
   static {
-    new DBAccessor();
+    new DatabaseService();
   }
-  static ArrayList<Customer> customers = DBAccessor.customersToArrayList();
-  static ArrayList<Restaurant> restaurants = DBAccessor.restaurantsToArrayList(false);
-  static ArrayList<Restaurant> availableRestaurants = DBAccessor.restaurantsToArrayList(true);
-  static ArrayList<Rider> riders = DBAccessor.ridersToArrayList();
-  static ArrayList<Order> orders = DBAccessor.orderToArrayList();
-  static ArrayList<Product> products = DBAccessor.productsToArrayList();
-  static ArrayList<OrderDetails> orderDetailsList = DBAccessor.orderDetailToArrayList();
-  static ArrayList<Payment> payments = DBAccessor.paymentsToArrayList();
-  static Cart cart = new Cart();
+  public static ArrayList<Customer> customers = DatabaseService.customersToArrayList();
+  public static ArrayList<Restaurant> restaurants = DatabaseService.restaurantsToArrayList(false);
+  public static ArrayList<Restaurant> availableRestaurants = DatabaseService.restaurantsToArrayList(true);
+  public static ArrayList<Rider> riders = DatabaseService.ridersToArrayList();
+  public static ArrayList<Order> orders = DatabaseService.orderToArrayList();
+  public static ArrayList<Product> products = DatabaseService.productsToArrayList();
+  public static ArrayList<OrderDetails> orderDetailsList = DatabaseService.orderDetailToArrayList();
+  public static ArrayList<Payment> payments = DatabaseService.paymentsToArrayList();
+  public static Cart cart = new Cart();
 
   public static void main(String[] args) {
-    if (args.length > 0) {
-      updateAll(customers, restaurants, products, riders, orders, orderDetailsList, payments);
-      args = new String[0];
-    }
     System.out.println("\t\t\t\tWELCOME TO FOS");
     System.out.println("Do you have an account?");
     String choice = scanner.nextLine();
@@ -35,17 +35,6 @@ public class Main {
       register();
     else
       main(args);
-  }
-
-  private static void updateAll(ArrayList... data) {
-    for (ArrayList Y : data)
-      for (Object X : Y) {
-        try {
-          X.getClass().getMethod("insertToDB").invoke(X);
-        } catch (IllegalAccessException | InvocationTargetException | NoSuchMethodException e) {
-          e.printStackTrace();
-        }
-      }
   }
 
   private static void register() {
@@ -81,7 +70,7 @@ public class Main {
 
     assert kind != null;
     String phoneNumber = compare("PhoneNumber", customers, riders, restaurants);
-    ResultSet rs = DBAccessor.executeDB("SELECT * FROM " + kind.name() + " ORDER BY ID DESC LIMIT 1");
+    ResultSet rs = DatabaseService.executeDB("SELECT * FROM " + kind.name() + " ORDER BY ID DESC LIMIT 1");
     long ID = 0;
     try {
       assert rs != null;
@@ -434,24 +423,4 @@ public class Main {
     riderOptions(user);
   }
 
-  enum UserKind {
-    customer(1), rider(2), restaurant(3);
-
-    private static final HashMap map = new HashMap<>();
-
-    static {
-      for (UserKind pageType : UserKind.values())
-        map.put(pageType.value, pageType);
-    }
-
-    private final int value;
-
-    UserKind(int value) {
-      this.value = value;
-    }
-
-    public static UserKind valueOf(int UserKind) {
-      return (UserKind) map.get(UserKind);
-    }
-  }
 }

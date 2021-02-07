@@ -1,3 +1,7 @@
+package fos.models;
+
+import fos.services.DatabaseService;
+
 public class Customer {
   private long ID;
   private String name;
@@ -7,7 +11,8 @@ public class Customer {
   private long phoneNumber;
   private String email;
 
-  public Customer(long ID, String userName, String password, String name, String address, long phoneNumber, String email) {
+  public Customer(long ID, String userName, String password, String name, String address, long phoneNumber,
+      String email) {
     this.ID = ID;
     this.name = name;
     this.address = address;
@@ -18,31 +23,18 @@ public class Customer {
   }
 
   public String toString() {
-    return "Customer Name: " + name + "\n" +
-        "Address: " + address + "\n" +
-        "Phone Number: " + phoneNumber + "\n" +
-        "E-mail: " + email + "\n";
+    return "Customer Name: " + name + "\n" + "Address: " + address + "\n" + "Phone Number: " + phoneNumber + "\n"
+        + "E-mail: " + email + "\n";
 
   }
 
   public void insertToDB() {
-    DBAccessor.executeDB("INSERT INTO foodsystem.customer " +
-        "(ID, user_name, password, CUSTOMER_NAME, " +
-        "CUSTOMER_ADDRESS, phoneNumber, email)" +
-        "VALUES (" + ID + ",'" +
-        userName + "','" +
-        password + "','" +
-        name + "','" +
-        address + "'," +
-        phoneNumber + ",'" +
-        email + "')" +
-        "ON DUPLICATE KEY UPDATE" +
-        "   user_name = '" + userName + "'," +
-        "   password = '" + password + "'," +
-        "   CUSTOMER_NAME = '" + name + "'," +
-        "   CUSTOMER_ADDRESS = '" + address + "'," +
-        "   phoneNumber = " + phoneNumber + "," +
-        "   email = '" + email + "'");
+    DatabaseService.executeDB("INSERT INTO foodsystem.customer " + "(ID, user_name, password, CUSTOMER_NAME, "
+        + "CUSTOMER_ADDRESS, phoneNumber, email)" + "VALUES (" + ID + ",'" + userName + "','" + password + "','" + name
+        + "','" + address + "'," + phoneNumber + ",'" + email + "')" + "ON DUPLICATE KEY UPDATE" + "   user_name = '"
+        + userName + "'," + "   password = '" + password + "'," + "   CUSTOMER_NAME = '" + name + "',"
+        + "   CUSTOMER_ADDRESS = '" + address + "'," + "   phoneNumber = " + phoneNumber + "," + "   email = '" + email
+        + "'");
   }
 
   public String getName() {
@@ -101,4 +93,3 @@ public class Customer {
     this.email = email;
   }
 }
-

@@ -1,9 +1,13 @@
+package fos.models;
+
+import fos.services.DatabaseService;
+
 public class Payment {
   private String ID;
   private Order order;
   private float amount;
 
-  Payment(String id, Order order, float amount) {
+  public Payment(String id, Order order, float amount) {
     this.ID = id;
     this.order = order;
     this.amount = amount;
@@ -11,21 +15,13 @@ public class Payment {
 
   public void insertToDB() {
 
-    DBAccessor.executeDB("INSERT INTO foodsystem.payment " +
-        "(ID, ORDER_NUMBER, amount)" +
-        "VALUES ('" +
-        ID + "'," +
-        order.getID() + "," +
-        amount + ")" +
-        "ON DUPLICATE KEY UPDATE" +
-        "   ORDER_NUMBER = " + order.getID() + "," +
-        "   amount = " + amount
-    );
+    DatabaseService.executeDB("INSERT INTO foodsystem.payment " + "(ID, ORDER_NUMBER, amount)" + "VALUES ('" + ID + "',"
+        + order.getID() + "," + amount + ")" + "ON DUPLICATE KEY UPDATE" + "   ORDER_NUMBER = " + order.getID() + ","
+        + "   amount = " + amount);
   }
 
   public String toString() {
-    return "Restaurant Name: " + order + "\n" +
-        "Address: " + amount + "\n";
+    return "Restaurant Name: " + order + "\n" + "Address: " + amount + "\n";
   }
 
   public Order getOrder() {

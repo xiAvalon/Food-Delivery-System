@@ -1,3 +1,5 @@
+package fos.models;
+
 import java.util.ArrayList;
 
 public class Cart {
@@ -6,7 +8,6 @@ public class Cart {
   public static void add(Product product) {
     cart.add(product);
   }
-
 
   public static void delete(Product product) {
     cart.remove(product);

@@ -30,6 +30,6 @@ Navigate via the CLI to the **Food Ordering System** directory, then:
 
 Navigate via the CLI to the **Food Ordering System** directory, then:
 
-- To compile: `javac -sourcepath src src/Main.java -d out`
+- To compile: `javac -sourcepath src src/fos/Main.java -d out`
 
-- To run: `java -cp lib/mysql-connector-java-8.0.23.jar:out Main`
+- To run: `java -cp lib/mysql-connector-java-8.0.23.jar:out fos.Main`

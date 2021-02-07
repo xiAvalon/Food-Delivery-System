@@ -1,3 +1,7 @@
+package fos.models;
+
+import fos.services.DatabaseService;
+
 public class Rider {
   private long ID;
   private String name;
@@ -6,8 +10,7 @@ public class Rider {
   private String password;
   private long phoneNumber;
 
-
-  Rider(long id, String name, String vehiclePlate, String userName, String password, long phoneNumber) {
+  public Rider(long id, String name, String vehiclePlate, String userName, String password, long phoneNumber) {
     this.ID = id;
     this.name = name;
     this.vehiclePlate = vehiclePlate;
@@ -16,11 +19,9 @@ public class Rider {
     this.phoneNumber = phoneNumber;
   }
 
-
   public String toString() {
-    return "Rider Name: " + name + "\n" +
-        "Vehicle Plate: " + vehiclePlate + "\n" +
-        "Phone Number: " + phoneNumber + "\n";
+    return "Rider Name: " + name + "\n" + "Vehicle Plate: " + vehiclePlate + "\n" + "Phone Number: " + phoneNumber
+        + "\n";
   }
 
   public String getName() {
@@ -73,22 +74,10 @@ public class Rider {
 
   public void insertToDB() {
 
-    DBAccessor.executeDB("INSERT INTO foodsystem.rider " +
-        "(ID, RIDER_NAME, VEHICLE_PLATE, user_name, password" +
-        ", phoneNumber)" +
-        "VALUES (" +
-        ID + ",'" +
-        name + "','" +
-        vehiclePlate + "','" +
-        userName + "','" +
-        password + "'," +
-        phoneNumber + ")" +
-        "ON DUPLICATE KEY UPDATE" +
-        "   RIDER_NAME = '" + name + "'," +
-        "   VEHICLE_PLATE = '" + vehiclePlate + "'," +
-        "   user_name = '" + userName + "'," +
-        "   password = '" + password + "'," +
-        "   phoneNumber = " + phoneNumber
-    );
+    DatabaseService.executeDB("INSERT INTO foodsystem.rider " + "(ID, RIDER_NAME, VEHICLE_PLATE, user_name, password"
+        + ", phoneNumber)" + "VALUES (" + ID + ",'" + name + "','" + vehiclePlate + "','" + userName + "','" + password
+        + "'," + phoneNumber + ")" + "ON DUPLICATE KEY UPDATE" + "   RIDER_NAME = '" + name + "',"
+        + "   VEHICLE_PLATE = '" + vehiclePlate + "'," + "   user_name = '" + userName + "'," + "   password = '"
+        + password + "'," + "   phoneNumber = " + phoneNumber);
   }
 }
