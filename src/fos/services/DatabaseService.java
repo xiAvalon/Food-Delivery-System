@@ -178,7 +178,8 @@ public class DatabaseService {
 
       }
       try {
-        results.add(new Payment(rs.getString(1), (Order) findRowBy(rs.getLong(2), "order"), rs.getFloat(3)));
+        results.add(new Payment(rs.getString(1), (Order) findRowBy(rs.getLong(2), "order"), rs.getFloat(3),
+            PaymentType.of(rs.getString(4))));
       } catch (SQLException e) {
         e.printStackTrace();
 
