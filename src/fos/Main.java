@@ -54,7 +54,7 @@ public class Main {
 
   private static void register() {
 
-    UserKind kind = checkKind();
+    UserType type = checkType();
     String userName;
     try {
       userName = compare("UserName", customers, riders, restaurants);
@@ -83,9 +83,9 @@ public class Main {
       address = scanner.next("\\d{1,5}\\s\\w.\\s(\\b\\w*\\b\\s){1,2}\\w*\\.");
     }
 
-    assert kind != null;
+    assert type != null;
     String phoneNumber = compare("PhoneNumber", customers, riders, restaurants);
-    ResultSet rs = DatabaseService.executeDB("SELECT * FROM " + kind.name() + " ORDER BY ID DESC LIMIT 1");
+    ResultSet rs = DatabaseService.executeDB("SELECT * FROM " + type.name() + " ORDER BY ID DESC LIMIT 1");
     long ID = 0;
     try {
       assert rs != null;
@@ -95,7 +95,7 @@ public class Main {
       e.printStackTrace();
     }
 
-    switch (kind) {
+    switch (type) {
       case customer -> {
         customers.add(new Customer(++ID, userName, password, name, address, Long.parseLong(phoneNumber), email));
         customers.get(customers.size() - 1).insertToDB();
@@ -124,14 +124,14 @@ public class Main {
 
   }
 
-  private static UserKind checkKind() {
+  private static UserType checkType() {
     System.out.println("How would you like to use the system? ");
     System.out.println("Customer->1, Rider->2, Restaurant->3");
     int input = scanner.nextInt();
     if (input > 3 || input < 1)
-      checkKind();
+      checkType();
     else
-      return UserKind.valueOf(input);
+      return UserType.valueOf(input);
     assert (false);
     return null;
   }
@@ -335,7 +335,7 @@ public class Main {
   private static int checkOptions(int max) {
     int input = scanner.nextInt();
     if (input > max || input < -1)
-      checkKind();
+      checkType();
     else
       return input;
     assert (false);
