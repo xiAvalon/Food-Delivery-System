@@ -60,6 +60,7 @@ public class Main {
       final JScrollPane scrollPane = new JScrollPane(textArea);
       scrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
       frame.getContentPane().add(scrollPane);
+      frame.validate();
       onlyFirst++;
     }
     System.out.println("\t\t\t\tWELCOME TO FOS");
