@@ -127,6 +127,7 @@ CREATE TABLE `payment` (
   `ID` char(5) NOT NULL,
   `ORDER_NUMBER` int NOT NULL,
   `amount` varchar(45) NOT NULL,
+  `type` varchar(11) NOT NULL,
   PRIMARY KEY (`ID`),
   KEY `ORDER_NUMBER` (`ORDER_NUMBER`),
   CONSTRAINT `payment_ibfk_1` FOREIGN KEY (`ORDER_NUMBER`) REFERENCES `orders` (`ID`)
@@ -139,7 +140,7 @@ CREATE TABLE `payment` (
 
 LOCK TABLES `payment` WRITE;
 /*!40000 ALTER TABLE `payment` DISABLE KEYS */;
-INSERT INTO `payment` VALUES ('P0001',1,'14.0'),('P0002',2,'15.0'),('P0003',3,'50.0'),('P0004',4,'16.0'),('P0005',5,'40.0');
+INSERT INTO `payment` VALUES ('P0001',1,'14.0',"Cash"),('P0002',2,'15.0',"Cash"),('P0003',3,'50.0',"Credit Card"),('P0004',4,'16.0',"Cash"),('P0005',5,'40.0',"Credit Card");
 /*!40000 ALTER TABLE `payment` ENABLE KEYS */;
 UNLOCK TABLES;
 
